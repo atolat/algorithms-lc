@@ -1,4 +1,4 @@
-# Recursive implementation - Print all binary strings of length n
+# Iterative implementation - Print all binary strings of length n
 def binarystrings(n):
     result = ["0","1"]
     for iter in range(2,n+1):

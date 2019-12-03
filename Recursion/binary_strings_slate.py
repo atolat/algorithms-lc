@@ -5,4 +5,4 @@ def binarystrings(slate, n):
         binarystrings(slate + "0", n-1)
         binarystrings(slate + "1", n-1)
 
-binarystrings("", 4)
+binarystrings("", 5)
