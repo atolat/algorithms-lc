@@ -18,15 +18,19 @@
 
 
 def permute(nums):
-    helper([],nums)
+    helper(nums,0,[])
     
-def helper(slate,n):
-    if len(n) == 0:
+def helper(S, i, slate):
+    if len(S) == i:
         print(slate)
-    else:
-        for x in n:
-            slate.append(x)
-            helper(slate, len(n)-1)
-            slate.pop()
-
+        return
+    
+    for pick in range(i, len(S)):
+        S[i], S[pick] = S[pick], S[i]
+        slate.append(S[i])
+        helper(S, i+1, slate)
+        slate.pop()
+        S[pick], S[i] = S[i], S[pick]
+        
+    
 permute([1,2,3])
