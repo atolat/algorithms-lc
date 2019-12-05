@@ -33,4 +33,4 @@ def helper(S, i, slate):
         S[pick], S[i] = S[i], S[pick]
         
     
-permute([1,2,3])
+permute([1,1,2])
