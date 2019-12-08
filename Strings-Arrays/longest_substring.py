@@ -22,42 +22,38 @@
 
 
 def lengthOfLongestSubstring(s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        # Edge Cases
-        if len(s) == 0:
-            return 0
+    # Edge Cases
+    if len(s) == 0:
+        return 0
 
-        if len(s) == 1:
-            return 1
+    if len(s) == 1:
+        return 1
 
-        # Initialize pointers
-        start = 0
-        end = 0
+    # Initialize pointers
+    start = 0
+    end = 0
 
-        # Set longest substring length to 0
-        longest = 0
+    # Set longest substring length to 0
+    longest = 0
 
-        # Initialize map -- {'char at index' : index} with first entry
-        char_map = {}
-        char_map[s[0]] = 0
+    # Initialize map -- {'char at index' : index} with first entry
+    char_map = {}
+    char_map[s[0]] = 0
 
-        while end < len(s) - 1:
-            # Increment end pointer
-            end += 1
-            charAtIndex = s[end]
+    while end < len(s) - 1:
+        # Increment end pointer
+        end += 1
+        charAtIndex = s[end]
 
-            # If charAtIndex is in the map and index is == start or greater than start, move start to index + 1
-            if charAtIndex in char_map and char_map[charAtIndex] >= start:
-                start = char_map[charAtIndex] + 1
+        # If charAtIndex is in the map and index is == start or greater than start, move start to index + 1
+        if charAtIndex in char_map and char_map[charAtIndex] >= start:
+            start = char_map[charAtIndex] + 1
 
-            # Add charAtIndex to map
-            char_map[charAtIndex] = end
+        # Add charAtIndex to map
+        char_map[charAtIndex] = end
 
-            # Update the result
-            if end - start + 1 > longest:
-                longest = end - start + 1
+        # Update the result
+        if end - start + 1 > longest:
+            longest = end - start + 1
 
-        return longest
+    return longest
