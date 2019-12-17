@@ -30,6 +30,7 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution(object):
     def pathSum(self, root, sum):
         # Use DFS Template to solve this
@@ -51,15 +52,17 @@ class Solution(object):
                     answer.append(slate[:])
                     slate.pop()
                     return
-                
+
             # Recursive Case : Internal Node
+            # Use a slate to record node values along the path
             slate.append(node.val)
             if node.left is not None:
-                dfs_helper(node.left, target,slate, slatesum + node.val)
-                
+                dfs_helper(node.left, target, slate, slatesum + node.val)
+
             if node.right is not None:
-                dfs_helper(node.right, target,slate, slatesum + node.val)
+                dfs_helper(node.right, target, slate, slatesum + node.val)
+
             slate.pop()
 
-        dfs_helper(root, sum,[], 0)
+        dfs_helper(root, sum, [], 0)
         return answer
