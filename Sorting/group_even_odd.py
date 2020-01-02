@@ -31,6 +31,7 @@
 
 # [4, 2, 1, 3]
 
+<<<<<<< HEAD
 import heapq
 def topK(arr, k):
     k_heap = []
@@ -51,3 +52,14 @@ def topK(arr, k):
     return k_heap
 
 print(topK([1,2,6,4,8,6,4,5,6],3))
+=======
+def solve(arr):
+    orange = -1  # Track even elements
+    green = -1  # Track odd elements
+
+    for green in range(len(arr)):
+        if arr[green] % 2 == 0:  # Even
+            orange += 1
+            arr[orange], arr[green] = arr[green], arr[orange]
+    return arr
+>>>>>>> 65c006708053d9f0dc45cb38e3dda64130e3fef9
