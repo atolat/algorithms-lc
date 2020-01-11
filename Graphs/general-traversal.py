@@ -27,7 +27,18 @@ def bfs(source):
                 visited[neighbor] = 1
                 q.put(neighbor)
 
+# DFS
+def dfs(source):
+    visited[source] = 1
+    for neighbor in adjList[source]:
+        if visited[neighbor] == -1:
+            dfs(neighbor)
+
 # Outer Loop
+components = 0
 for v in range(n):
     if visited[v] == -1:
+        components += 1   
         bfs(v)
+
+return components
