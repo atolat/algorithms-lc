@@ -7,6 +7,7 @@ edgeList = [[1,2],[2,4],[1,3],[2,3]]
 # Given # of vertices n
 adjList = [[] for _ in range(n)]
 visited = [-1] * n
+parent = [-1] * n
 
 for [src,dst] in edgeList:
     adjList[src].append(dst)
@@ -25,14 +26,21 @@ def bfs(source):
         for neighbor in adjList[node]:
             if visited[neighbor] == -1:
                 visited[neighbor] = 1
+                parent[neighbor] = node
                 q.put(neighbor)
-
+            else: # Detect cross edge
+                if neighbor != parent[node]:
+                    # Cross Edge Found!
 # DFS
 def dfs(source):
     visited[source] = 1
     for neighbor in adjList[source]:
         if visited[neighbor] == -1:
+            parent[neighbor] = source
             dfs(neighbor)
+        else: # Detect back edge
+            if neighbor != parent[source]:
+                # Back edge detected
 
 # Outer Loop
 components = 0
