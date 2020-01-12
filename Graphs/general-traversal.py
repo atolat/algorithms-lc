@@ -8,6 +8,7 @@ edgeList = [[1,2],[2,4],[1,3],[2,3]]
 adjList = [[] for _ in range(n)]
 visited = [-1] * n
 parent = [-1] * n
+distance = [-1] * n
 
 for [src,dst] in edgeList:
     adjList[src].append(dst)
@@ -18,6 +19,7 @@ for [src,dst] in edgeList:
 def bfs(source):
     q = Queue()
     visited[source] = 1
+    distance[source] = 0
     q.put(source)
 
     while q.empty() is False:
@@ -27,10 +29,13 @@ def bfs(source):
             if visited[neighbor] == -1:
                 visited[neighbor] = 1
                 parent[neighbor] = node
+                distance[neighbor] = distance[node] + 1
                 q.put(neighbor)
             else: # Detect cross edge
                 if neighbor != parent[node]:
                     # Cross Edge Found!
+                    if distance[neighbor] == distance[node]:
+                        # Same level cross edge -> odd length cycle -> graph is not bipartite
 # DFS
 def dfs(source):
     visited[source] = 1
