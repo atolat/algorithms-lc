@@ -47,8 +47,8 @@ def findUniqueSubsets(m,n):
 
     # Call helper with empty slate
     helper(arr, 0, [])
-
+    results.sort(key=len)
     return results
 
 
-print(findUniqueSubsets([1,2,3],[3,3,1]))
+print(findUniqueSubsets([1,2,3],[1,1,1]))
