@@ -9,6 +9,10 @@ adjList = [[] for _ in range(n)]
 visited = [-1] * n
 parent = [-1] * n
 distance = [-1] * n
+arrival = [-1] * n
+departure = [-1] * n
+time = 0
+topsort = []
 
 for [src,dst] in edgeList:
     adjList[src].append(dst)
@@ -39,19 +43,38 @@ def bfs(source):
 # DFS
 def dfs(source):
     visited[source] = 1
+    # For directed graph, record arrival and departure time at a node
+    arrival[source] = time + 1
     for neighbor in adjList[source]:
         if visited[neighbor] == -1:
             parent[neighbor] = source
             dfs(neighbor)
         else: # Detect back edge
             if neighbor != parent[source]:
+                pass
                 # Back edge detected
+            # Cases for directed graph - tree, forward, cross edge
+            if departure[neighbor] == -1: # Departure time absent
+                pass
+                # Back edge, cycle exists
+            elif arrival[source] > arrival[neighbor]:
+                pass
+                # Forward Edge found
+            else: # arrival[source] < arrival[neighbor] and departure time of neighbor is set
+                pass
+                # Cross edge found
+            
+        departure[source] = time + 1 
+        # Append node to topological sort list (reversed)
+        topsort.append(source)
 
 # Outer Loop
 components = 0
 for v in range(n):
     if visited[v] == -1:
-        components += 1   
+        components += 1
+        # dfs(v)
+        # Handle boolean returns for cycles, back edges
         bfs(v)
-
-return components
+topsort.reverse() # Topological Sorted Graph output
+components # Number of connected components
