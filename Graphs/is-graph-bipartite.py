@@ -28,7 +28,6 @@
 # 3----2
 # We cannot find a way to divide the set of nodes into two independent subsets.
 # Note:
-
 # graph will have length in range [1, 100].
 # graph[i] will contain integers in range [0, graph.length - 1].
 # graph[i] will not contain i or duplicate values.
