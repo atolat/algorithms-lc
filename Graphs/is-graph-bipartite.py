@@ -27,8 +27,6 @@
 # |  \ |
 # 3----2
 # We cannot find a way to divide the set of nodes into two independent subsets.
- 
-
 # Note:
 
 # graph will have length in range [1, 100].
