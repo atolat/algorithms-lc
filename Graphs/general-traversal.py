@@ -37,8 +37,10 @@ def bfs(source):
                 q.put(neighbor)
             else: # Detect cross edge
                 if neighbor != parent[node]:
+                    pass
                     # Cross Edge Found!
                     if distance[neighbor] == distance[node]:
+                        pass
                         # Same level cross edge -> odd length cycle -> graph is not bipartite
 # DFS
 def dfs(source):
