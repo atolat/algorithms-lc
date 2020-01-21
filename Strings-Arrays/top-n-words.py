@@ -42,31 +42,58 @@
 # "elmo" should be placed before "elsa" in the result because "elmo" appears in 3 different quotes and "elsa" appears in 2 different quotes.
 
 import re, heapq
+
 def topKitems(toys, quotes, K):
     results = []
-    # Build a map wit toys->[freq, quote_count]
+    
+    # Build a map to store toy frequency and quote count toys->[freq, quote_count]
+    # Initialize this to 0,0 for each toy
     toy_freq = {toy:[0,0] for toy in toys}
+    
     for quote in quotes:
+        # For every quote, maintain a map of toy: T/F to check if the toy has already been added for that quote
+        # Can be avoided ... optimize
         quote_toy = {toy : False for toy in toys}
+        
+        # For every word in the quote
         for word in quote.lower().split():
+            # Sanitize the word, lower case, remove special characters
             word = re.sub('[^a-z]','',word)
+            # If the word is a toy
             if word in toy_freq:
+                # Update toy frequency and quote count
                 toy_freq[word][0] += 1
                 if quote_toy[word] is False:
                     toy_freq[word][1] += 1
                     quote_toy[word] = 1
     
-    # Sorting Approach             
+    # Sorting Approach  
+    # Sort by frequency - descending, quote_count - descending, toy name alphabetical 
+    # Time complexity: O(W)+O(TlogT)
+    # W - total number of words(quotes* words in each quote)
+    # T - number of toys
+    #Space complexity: O(T) -->(dictionary)
+
     # result = [w[0] for w in sorted(toy_freq.items(), key= lambda x: (-x[1][1], -x[1][0], x[0]))[:K]]
     
     # Heap Approach
+    # Time complexity: O(W)+O(TlogN) ---> maintain heap of size N(max toys) at any time
+    # W - total number of words(quotes* words in each quote)
+    # T - number of toys
+    # N - max number of toys to return
+    # Space complexity: O(T) + O(N) -->(dictionary + heap)          
+
     toy_heap = []
+    
+    # Build a heap with [toy_freq, quote_count, toy]
+    # Default heap is a min heap, multiply by -1 to get max heap
     for toy in toy_freq:
         freq, quote_count = toy_freq[toy][0], toy_freq[toy][1]
         toy_heap.append([-1*freq,-1*quote_count,toy])
     
     heapq.heapify(toy_heap)
     
+    # Pop top K, returns the max
     for i in range(K):
         results.append(heapq.heappop(toy_heap)[2])
 
