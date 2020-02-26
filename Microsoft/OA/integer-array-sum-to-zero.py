@@ -11,4 +11,4 @@ def sumZero(n):
         A[i] = i * 2 - n + 1
     return A
 
-print(sumZero(12))
+print(sumZero(11))
