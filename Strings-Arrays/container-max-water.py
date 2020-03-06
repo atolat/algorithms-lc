@@ -6,7 +6,6 @@
 
 # Input: [1,8,6,2,5,4,8,3,7]
 # Output: 49
-
 class Solution(object):
     def maxArea(self, height):
         """
@@ -14,16 +13,23 @@ class Solution(object):
         :rtype: int
         """
         # Two pointers
-        i = 0
-        j = len(height) - 1
+        left = 0
+        right = len(height) - 1
         max_area = -1
         min_height = sys.maxint
         
-        while i<j:
-            min_height = min(height[i],height[j])
-            max_area = max(max_area, min_height*(j-i))
-            if height[i] < height[j]:
-                i += 1
+        # move towards the center
+        while left<right:
+            # The line with lower height determines the amount of water 
+            # that can be stored
+            min_height = min(height[left],height[right])
+            
+            # Area = length (min_height) * width (right - left)
+            max_area = max(max_area, min_height*(right-left))
+            
+            # Try to maximize height on left or right
+            if height[left] < height[right]:
+                left += 1
             else:
-                j -= 1
+                right -= 1
         return max_area
