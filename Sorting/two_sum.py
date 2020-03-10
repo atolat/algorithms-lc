@@ -24,9 +24,9 @@ class Solution(object):
             num = nums[i]
             k = target - num
             if k not in seen:
-                seen[num] = [num,i]
+                seen[num] = i
             else:
-                return [seen[k][1],i]
+                return [seen[k],i]
 
     # Sort and solve - in - place - O(n log n)
     def twoSumInPlace(self, nums, target):

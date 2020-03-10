@@ -58,14 +58,21 @@ class Solution(object):
         # Keep track of output
         out = 0
         
+        # Process the 0th index character
+        # '+' or '-' or number or alphabet
+        # Check if '+' or '-' and set flag
         if str[0] == '-':
             negative = True
         elif str[0] == '+':
             negative  = False
         
-        # If the first character is not numeric, return False
+        # If the 0th character is not numeric, return False
         elif not str[0].isnumeric():
             return 0
+        # EG 1234 -
+        # 1*10 + 2 = 12
+        # 12*10 + 3 = 123
+        # 123*10 + 4 = 1234
         else:
             out = ord(str[0]) - ord('0')
         for i in range(1, len(str)):

@@ -45,7 +45,8 @@ class Solution(object):
         stack = []
         
         for c in s:
-            # If it is a closing parenthesis:
+            # If it is a closing parenthesis - 
+            # the corresponding opening paren is in the map!:
             # Pop element and save to top
             # If stack is empty, top = '#'
             if c in hmap:
@@ -54,7 +55,7 @@ class Solution(object):
                 # return False
                 if hmap[c] != top:
                     return False
-            else:
+            else: # Push only the opening parenthesis on the stack
                 stack.append(c)
         # If the stack is empty, return True
         return not stack
