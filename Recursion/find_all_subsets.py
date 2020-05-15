@@ -44,5 +44,27 @@ class Solution(object):
         result = []
         helper(nums, 0, [])
         return result
-    
+
+# Cleaner, using backtracking
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        
+        def helper(S, slate):
+            
+            res.append(slate[:])
+            
+            for index in range(len(S)):
+                slate.append(S[index])
+                helper(S[index+1:], slate)
+                slate.pop()
+        
+        if nums:
+            helper(nums,[])
+            return res
+        return []
     

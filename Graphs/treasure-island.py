@@ -47,3 +47,6 @@ grid = [['O', 'O', 'O', 'O'],
  ['X', 'D', 'D', 'O']]
 
 print(treasureIsland(grid))
+
+# Time complexity: O(r * c).
+# Space complexity: O(r * c).

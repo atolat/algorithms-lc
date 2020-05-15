@@ -27,6 +27,8 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: float
         """
+        # Approach - 
+        # 1. 
         # Always perform binary search on smaller of two arrays
         if len(nums1) > len(nums2):
             return self.findMedianSortedArrays(nums2,nums1)

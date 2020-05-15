@@ -43,3 +43,10 @@ def longestPalindrome(s):
     return result
 
 print(longestPalindrome("babad"))
+
+# Complexity Analysis
+
+# Time complexity : O(n^2)
+# Since expanding a palindrome around its center could take O(n)O(n) time, the overall complexity is O(n^2)
+
+# Space complexity : O(1)O(1).

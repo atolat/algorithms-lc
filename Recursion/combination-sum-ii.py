@@ -27,7 +27,6 @@
 #   [1,2,2],
 #   [5]
 # ]
-
 class Solution(object):
     def combinationSum2(self, candidates, target):
         """
@@ -36,22 +35,22 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         candidates.sort()
-        result = []
-        def helper(S, i, slate, slatesum, target):
-            # Backtracking Case
-            if slatesum == target:
-                result.append(slate[:])
+        res = []
+        def helper(S, slate, slate_sum):
+            if slate_sum > target:
+                return
+            if slate_sum == target:
+                res.append(slate[:])
                 return
             
-            # Base Case
-            if slatesum > target:
-                return
-            
-            for j in range(i, len(S)):
-                if j == i or S[j] != S[j-1]:
-                    slate.append(S[j])
-                    helper(S, j+1, slate, slatesum + S[j], target)
-                    slate.pop()
-            
-        helper(candidates, 0, [], 0, target)
-        return result
+            for index in range(len(S)):
+                if index > 0 and S[index-1] == S[index]:
+                    continue
+                slate.append(S[index])
+                helper(S[index+1:], slate, slate_sum+S[index])
+                slate.pop()
+                
+        if candidates:
+            helper(candidates,[],0)
+            return res
+        return []

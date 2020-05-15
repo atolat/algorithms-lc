@@ -34,3 +34,29 @@ def helper(S, i, slate):
         
     
 permute([1,1,2])
+
+# Cleaner LC Solution
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        
+        def helper(S, i, slate):
+            # Base
+            if i == len(nums):
+                res.append(slate[:])
+                return
+            
+            # Recursive
+            for j in range(len(S)):
+                slate.append(S[j])
+                helper(S[:j]+S[j+1:], i+1, slate)
+                slate.pop()
+                
+        if nums:
+            helper(nums, 0, [])
+            return res
+        return []
