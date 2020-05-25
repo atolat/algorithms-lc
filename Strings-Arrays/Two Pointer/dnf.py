@@ -19,3 +19,9 @@ def dutch_flag_sort(balls):
         else:
             i += 1
     print(balls)
+    
+# Time complexity #
+# The time complexity of the above algorithm will be O(N) as we are iterating the input array only once.
+
+# Space complexity #
+# The algorithm runs in constant space O(1).
