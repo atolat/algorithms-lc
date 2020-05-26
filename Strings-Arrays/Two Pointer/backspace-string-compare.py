@@ -68,3 +68,7 @@ class Solution(object):
             index2 = i2 - 1
             
         return True
+    
+# Complexity Analysis
+# Time Complexity: O(M + N), where M, N are the lengths of S and T respectively.
+# Space Complexity: O(1).
