@@ -1,0 +1,4 @@
+## General Pattern
+
+## Similar Questions
+ 
