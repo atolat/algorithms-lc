@@ -92,3 +92,16 @@ class Trie(object):
 # obj.insert(word)
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
+
+def main():
+    obj = Trie()
+    obj.insert("abc")
+    obj.insert("abgl")
+    obj.insert("cdf")
+    
+    print(obj.search("ac"))
+    print(obj.search("abc"))
+    print(obj.search("asvnc"))
+    print(obj.startsWith("a"))
+    
+main()

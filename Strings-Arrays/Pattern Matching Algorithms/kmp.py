@@ -1,0 +1,68 @@
+    # /**
+    #  * KMP algorithm of pattern matching.
+    #  */
+    # public boolean KMP(char []text, char []pattern){
+        
+    #     int lps[] = computeTemporaryArray(pattern);
+    #     int i=0;
+    #     int j=0;
+    #     while(i < text.length && j < pattern.length){
+    #         if(text[i] == pattern[j]){
+    #             i++;
+    #             j++;
+    #         }else{
+    #             if(j!=0){
+    #                 j = lps[j-1];
+    #             }else{
+    #                 i++;
+    #             }
+    #         }
+    #     }
+    #     if(j == pattern.length){
+    #         return true;
+    #     }
+    #     return false;
+    # }
+    
+# Compute the pi table or LPS table for the pattern
+def computeLPS(pattern):
+    lps = [0 for c in pattern]
+    index = 0
+    i = 1
+    while i < len(lps):
+        if pattern[i] == pattern[index]:
+            lps[i] = index + 1
+            index += 1
+            i += 1
+        else:
+            if index != 0:
+                index = lps[index-1]
+            else:
+                lps[i] = 0
+                i += 1
+    return lps
+
+
+# KMP Algorithm
+def KMP(text, pattern):
+    lps = computeLPS(pattern)
+    i,j = 0,0
+    indices = []
+    while i < len(text) and j < len(pattern):
+        if text[i] == pattern[j]:
+            i += 1
+            j += 1
+            if j == len(pattern):
+                indices.append(i-j)
+                print("Pattern found at index "+ str(i-j))
+                j = lps[j-1]
+        else:
+            if j != 0:
+                j = lps[j-1]
+            else:
+                i += 1
+    if indices:
+        return indices
+    return [-1]
+
+print(KMP("Ourbusinessisourbusinessnoneofyourbusiness", "blast"))
