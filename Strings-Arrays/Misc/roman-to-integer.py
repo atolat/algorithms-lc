@@ -64,6 +64,7 @@ class Solution(object):
         for i in range(len(s)):
             # Subractive case
             if rtoi_map[s[i]] > rtoi_map[s[i-1]] and i > 0:
+                # Undo and subtract - 2 times previous value
                 result = result + rtoi_map[s[i]] - 2*rtoi_map[s[i-1]]
             else: # Additive case
                 result += rtoi_map[s[i]]

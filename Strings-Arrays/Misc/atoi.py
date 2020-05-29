@@ -88,5 +88,4 @@ class Solution(object):
             return out
         else:
             return -1*out
-
-            
+        
