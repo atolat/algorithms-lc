@@ -31,5 +31,3 @@ def swapBits(x, i, j):
 ```
 
 https://catonmat.net/low-level-bit-hacks
-
-
