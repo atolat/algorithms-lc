@@ -1,6 +1,3 @@
-
-import math
-
 def merge_sort(arr):
     return helper(arr,0,len(arr)-1)
 
