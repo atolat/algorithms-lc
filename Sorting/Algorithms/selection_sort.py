@@ -3,15 +3,12 @@ def selection_sort(arr):
         min = i
         for j in range(i+1,len(arr)):
             if arr[j] <= arr[min]:
-                swap(arr,j,min)
+                arr[j], arr[min] = arr[min], arr[j]
     return arr
 
-
-
-def swap(arr, firstIndex, secondIndex):
-    temp = arr[firstIndex]
-    arr[firstIndex] = arr[secondIndex]
-    arr[secondIndex] = temp
-
-
 print(selection_sort([3,4,6,5,4,1,2,0,8]))
+
+# T(n) = O(n**2)
+# S(n) = O(1)
+# NOT STABLE
+

@@ -15,8 +15,8 @@ def helper(a,start,end):
     # Assign pivot element to element at start index, pivot is not the start element
     pivot = a[start]
     # Initialize orange and green pointers
-    orange = start
-    green = start
+    orange = start # Elements <= pivot
+    green = start # Elements > pivot
     # Traverse array with green pointer
     for green in range(start+1, end+1):
         if a[green] <= pivot:
@@ -34,3 +34,7 @@ def helper(a,start,end):
 
 print(quick_sort([8,8,1,2,3,4,5,6,7,7,8,8,7,6,9,1]))
 
+# Time Complexity:
+# O(n log n) - Average Case
+# O(n ** 2) - Worst Case - Pivot is extreme element, largest or smallest
+# NOT STABLE
