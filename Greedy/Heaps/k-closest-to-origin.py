@@ -84,3 +84,38 @@ print(kClosest([[0, 1], [1, 0]], 1))
 def kClosest(self, points, K):
         points.sort(key=lambda P: P[0]**2 + P[1]**2)
         return points[:K]
+    
+# Alternate Solution - using MAXHEAP
+from heapq import *
+def kClosest(points, K):
+    """
+    :type points: List[List[int]]
+    :type K: int
+    :rtype: List[List[int]]
+    """
+    def distance_from_origin(point):
+        x, y = point[0], point[1]
+        return -(x*x + y*y)
+    
+    maxheap = []
+    output = []
+    
+    for i in range(K):
+        heappush(maxheap, (distance_from_origin(points[i]), points[i]))
+    
+    for i in range(K, len(points)):
+        top = -(maxheap[0][0])
+        if -distance_from_origin(points[i]) < top:
+            heappop(maxheap)
+            heappush(maxheap, (distance_from_origin(points[i]), points[i]))
+
+    for i in range(len(maxheap)):
+        output.append(maxheap[i][1])
+        
+    return output
+
+# Time complexity #
+# The time complexity of this algorithm is (N*logK) as we iterating all points and pushing them into the heap.
+
+# Space complexity #
+# The space complexity will be O(K) because we need to store ‘K’ point in the heap.
