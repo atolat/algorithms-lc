@@ -37,3 +37,45 @@ class Solution(object):
             result.append(heappop(minheap)[1])
             
         return sorted(result)
+    
+# Time complexity #
+# The time complexity of the above algorithm is O(logN + K*logK). 
+# We need O(logN)O(logN) for Binary Search and O(K*logK)O(K∗logK) to insert the numbers in the Min Heap, 
+# as well as to sort the output array.
+
+# Space complexity #
+# The space complexity will be O(K), as we need to put a maximum of 2K numbers in the heap.
+
+# Alternate - Binary Search - FASTER
+from heapq import *
+import bisect
+class Solution(object):
+    def findClosestElements(self, arr, k, x):
+        """
+        :type arr: List[int]
+        :type k: int
+        :type x: int
+        :rtype: List[int]
+        """
+        index = bisect.bisect_left(arr, x) - 1
+        left = index
+        right = index + 1
+        n = len(arr)
+        result = collections.deque()
+        for i in range(k):
+            if left >= 0 and right < n:
+                diff1 = abs(arr[left] - x)
+                diff2 = abs(arr[right] - x)
+                if diff1 <= diff2:
+                    result.appendleft(arr[left])
+                    left -= 1
+                else:
+                    result.append(arr[right])
+                    right += 1
+            elif left >= 0:
+                result.appendleft(arr[left])
+                left -= 1
+            elif right < n:
+                result.append(arr[right])
+                right += 1
+        return result
