@@ -19,7 +19,6 @@
 # return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 
 
-
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -29,31 +28,25 @@
 
 class Solution(object):
     def hasPathSum(self, root, sum):
-        # Use DFS Template to solve this
-        # Edge Case
-        if root is None:
-            return False
-        # Set a global boolean as the answer
-        answer = [False]
         """
         :type root: TreeNode
         :type sum: int
         :rtype: bool
         """
-        def dfs_helper(node, target, slatesum):
-            # Base Case : Leaf Node
-            if node.left is None and node.right is None:
-                if target == slatesum + node.val:
-                    answer[0] = True
-                    return
-                
-            # Recursive Case : Internal Node
-            if node.left is not None:
-                dfs_helper(node.left, target, slatesum + node.val)
-                
-            if node.right is not None:
-                dfs_helper(node.right, target, slatesum + node.val)
-                
+        result = [False]
+        if not root:
+            return 0
 
-        dfs_helper(root, sum, 0)
-        return answer[0]
+        def dfs(node, slatesum):
+            slatesum += node.val
+            if node.left is None and node.right is None:
+                if slatesum == sum:
+                    result[0] = True
+                    return
+            if node.left is not None:
+                dfs(node.left, slatesum)
+            if node.right is not None:
+                dfs(node.right, slatesum)
+
+        dfs(root, 0)
+        return result[0]
