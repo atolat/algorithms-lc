@@ -44,6 +44,8 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         results = {}
+        # Alternate!
+        # results = defaultdict(lambda: defaultdict(list))
 
         if not root:
             return None
