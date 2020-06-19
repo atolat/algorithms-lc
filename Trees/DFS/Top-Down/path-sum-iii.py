@@ -48,6 +48,7 @@ class Solution(object):
         def dfs(node, slate):
             slate.append(node.val)
             slate_sum = 0
+            # Compute suffix sums of slate
             for i in range(len(slate) - 1, -1, -1):
                 slate_sum += slate[i]
                 if slate_sum == sum1:
