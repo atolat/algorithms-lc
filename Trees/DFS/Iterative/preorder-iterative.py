@@ -30,16 +30,16 @@ class Solution(object):
         """
         # Try and simulate the call stack and program counter
         # during recursive execution
-        
+
         # Edge
         if root is None:
             return []
         result = []
         stack = [(root, None)]
-        
+
         while len(stack) != 0:
-            (node,zone) = stack[-1]
-            
+            (node, zone) = stack[-1]
+
             if zone is None:
                 stack[-1] = (node, "ARRIVAL")
                 result.append(node.val)
