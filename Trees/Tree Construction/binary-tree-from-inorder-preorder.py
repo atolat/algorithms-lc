@@ -70,8 +70,5 @@ class Solution(object):
         ino_map = {}
         for i in range(len(inorder)):
             ino_map[inorder[i]] = i
-
-        # pIndex keeps track of the current root
-        pIndex = [0]
-
+            
         return helper(0, len(preorder) - 1, 0, len(inorder) - 1)

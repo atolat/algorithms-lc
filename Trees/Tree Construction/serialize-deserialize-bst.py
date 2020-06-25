@@ -10,7 +10,7 @@
 # The encoded string should be as compact as possible.
 
 # Definition for a binary tree node.
-# class TreeNode:
+# class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
@@ -18,42 +18,65 @@
 
 class Codec:
 
-    def __init__(self):
-        self.stack = []
-
-    def serialize(self, root: TreeNode) -> str:
+    def serialize(self, root):
         """Encodes a tree to a single string.
+        
+        :type root: TreeNode
+        :rtype: str
         """
-        result = []
-        self.stack.append(root)
-
-        while len(self.stack) > 0:
-            h = self.stack.pop()
-            if h:
-                result.append(str(h.val)+',')
-                self.stack.append(h.right)
-                self.stack.append(h.left)
-            else:
-                result.append('#,')
-        return ''.join(result)[0:-1]
-
-    def deserialize(self, data: str) -> TreeNode:
+        # Use preorder serialization
+        if not root:
+            return []
+        preorder = []
+        
+        def dfs(node): 
+            preorder.append(node.val)
+            if node.left:
+                dfs(node.left)
+            if node.right:
+                dfs(node.right)
+        dfs(root)
+        return preorder
+        
+    def deserialize(self, data):
         """Decodes your encoded data to tree.
+        
+        :type data: str
+        :rtype: TreeNode
         """
-        def helper(arr, t):
-            if arr[t[0]] == '#':
+        preorder = data
+        inorder = sorted(data)
+        ino_map = {}
+        for i in range(len(inorder)):
+            ino_map[inorder[i]] = i
+            
+        def helper(p_start, p_end, i_start, i_end):
+            # Base Case
+            if p_start > p_end:
                 return None
-            root = TreeNode(int(arr[t[0]]))
-            t[0] += 1
-            root.left = helper(arr, t)
-            t[0] += 1
-            root.right = helper(arr, t)
+            if p_start == p_end:
+                return TreeNode(preorder[p_start])
+
+            root_val = preorder[p_start]
+            root_index = ino_map[root_val]
+            root = TreeNode(root_val)
+
+            # Number of elements in left subtree:
+            numleft = root_index - i_start
+            # Number of elements in right subtree:
+            numright = i_end - root_index
+
+            # Recursively construct left and right subtrees
+            root.left = helper(p_start + 1,
+                               p_start + numleft,
+                               i_start,
+                               i_start + numleft - 1)
+            root.right = helper(p_start + numleft + 1,
+                                p_end,
+                                root_index + 1,
+                                i_end)
             return root
-
-        arr = data.split(',')
-        t = [0]
-        return helper(arr, t)
-
+        return helper(0, len(preorder) - 1, 0, len(inorder) - 1)      
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
