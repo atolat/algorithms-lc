@@ -26,12 +26,12 @@ class Solution(object):
     # Find largest index j such that j ≥ i and array[j] > array[i − 1].
     # Swap array[j] and array[i − 1].
     # Reverse the suffix starting at array[i].
-    
+
         i = j = len(nums) - 1
         while i > 0 and nums[i] <= nums[i-1]:
             i -= 1
 
-        if i == 0: # descending sequence
+        if i == 0:  # descending sequence
             nums.reverse()
             return
 

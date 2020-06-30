@@ -18,10 +18,24 @@ def dutch_flag_sort(balls):
             high_boundary -= 1
         else:
             i += 1
-    print(balls)
+    return balls
     
 # Time complexity #
 # The time complexity of the above algorithm will be O(N) as we are iterating the input array only once.
 
 # Space complexity #
 # The algorithm runs in constant space O(1).
+
+import pytest
+
+
+# @pytest.mark.parametrize("n, expected", [
+#     # (1, 1),
+#     # (2, 2),
+#     (3, 5),
+# ])
+def test_bst():
+    assert(dutch_flag_sort(['B','B','R','G','R','G'])) == ['R','R','G','G','B','B']
+
+
+# pytest.main()

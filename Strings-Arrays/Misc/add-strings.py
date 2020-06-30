@@ -17,10 +17,10 @@ class Solution(object):
         carry = 0
         for i in reversed(range(max_len)):
             ans = sum(map(int, [num1[i], num2[i], carry]))
-            result.append(ans%10)
+            result.append(ans % 10)
             carry = ans//10
-        
+
         if carry:
             result.append(carry)
-            
+
         return ''.join(map(str, result))[::-1]
