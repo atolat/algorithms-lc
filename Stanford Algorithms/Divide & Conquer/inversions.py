@@ -1,5 +1,5 @@
 def merge_sort(arr):
-
+    
     return helper(arr, 0, len(arr)-1)
 
 
@@ -10,9 +10,11 @@ def helper(arr, startIndex, endIndex):
     # Recursive Case
     # Split
     mid = (startIndex + endIndex)//2
-    helper(arr, startIndex, mid)
-    helper(arr, mid+1, endIndex)
+    a, ai = helper(arr, startIndex, mid)
+    b, bi = helper(arr, mid+1, endIndex)
     
+    inversions = 0 + ai + bi
+
     # Merge
     i = startIndex
     j = mid + 1
@@ -25,6 +27,7 @@ def helper(arr, startIndex, endIndex):
 
         elif arr[j] < arr[i]:
             aux.append(arr[j])
+            inversions += (mid - i + 1)
             j += 1
 
     while i <= mid:
@@ -35,12 +38,13 @@ def helper(arr, startIndex, endIndex):
         aux.append(arr[j])
         j += 1
     arr[startIndex:endIndex+1] = aux
-    return arr
+    return arr, inversions
 
 def main():
-    arr = [1,4,3,2,8,11,4,6]
-    res = merge_sort(arr)
-    print(res)
+    int_list = open('./integer_array.txt', 'r')
+    arr = [int(line) for line in int_list]
+    arr, inv = merge_sort(arr)
+    print(inv)
     
 main()
 
