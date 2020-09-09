@@ -23,6 +23,8 @@ class Solution(object):
         :rtype: int
         """
         # Initialize 1D array of size amount
+        # Every value in the dp table represents:
+        # table[i] = min number of coins to make amount i
         table = [float('+inf')]*(amount+1)
         
         # Base Cases
