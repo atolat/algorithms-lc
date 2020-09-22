@@ -63,3 +63,31 @@ class Solution(object):
             curr = curr.right
 
         return head
+
+
+class Solution(object):
+    def flatten(self, root):
+        """
+        :type root: TreeNode
+        :rtype: None Do not return anything, modify root in-place instead.
+        """
+        if not root:
+            return None
+
+        def dfs(node):
+            if node.left is None and node.right is None:
+                return node
+            leftTail, rightTail = None, None
+            if node.left:
+                leftTail = dfs(node.left)
+            if node.right:
+                rightTail = dfs(node.right)
+
+            if leftTail:
+                leftTail.right = node.right
+                node.right = node.left
+                node.left = None
+
+            return rightTail if rightTail else leftTail
+
+        dfs(root)
