@@ -29,6 +29,7 @@ class OldFashionedPrinter(Machine):
     def print(self, document):
         # ok - print stuff
         pass
+    # For unimplemented methods - either do nothing or complain(error/exception)
 
     def fax(self, document):
         pass  # do-nothing
@@ -38,6 +39,8 @@ class OldFashionedPrinter(Machine):
         raise NotImplementedError('Printer cannot scan!')
 
 # Follows ISP
+
+
 class Printer:
     @abstractmethod
     def print(self, document): pass

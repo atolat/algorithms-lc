@@ -1,5 +1,6 @@
 # Liskov Substituition Principle
-
+# If you have an interface that takes a base class
+# you should be able to stick a derived class and all methods should continue to work
 class Rectangle:
     def __init__(self, width, height):
         self._height = height
@@ -42,9 +43,11 @@ class Square(Rectangle):
         _width = _height = value
 
 
-def use_it(rc): # This function works only on a rectangle and no other inheriters of Rectangle
+def use_it(rc):  # This function works only on a rectangle and no other inheriters of Rectangle (violated LSP)
     w = rc.width
     rc.height = 10  # unpleasant side effect
+    # for a square, when height is updated, width gets automatically updated
+    # the value cached in 'w' gets overwritten
     expected = int(w * 10)
     print(f'Expected an area of {expected}, got {rc.area}')
 

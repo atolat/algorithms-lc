@@ -1,4 +1,7 @@
-# Single Responsibility Principle - Do not overload class with too many responsibilities
+# Single Responsibility Principle
+# - Separation of Concerns
+# - Do not overload class with too many responsibilities
+# - A class should have a single reason to change and that change should be related to it's primary responsiobility
 
 class Journal:
     def __init__(self):
@@ -15,7 +18,9 @@ class Journal:
     def __str__(self):
         return "\n".join(self.entries)
 
-    # break SRP - Make a new class to manage persistence
+    # break SRP -
+    # These features might be common for a number of applications and require a central implementation 
+    # that can be changed in the future, implement it as a different class.
     def save(self, filename):
         file = open(filename, "w")
         file.write(str(self))
@@ -28,7 +33,10 @@ class Journal:
         pass
 
 # Follows SRP
+
+
 class PersistenceManager:
+    @staticmethod
     def save_to_file(journal, filename):
         file = open(filename, "w")
         file.write(str(journal))
@@ -41,7 +49,7 @@ j.add_entry("I ate a bug.")
 print(f"Journal entries:\n{j}\n")
 
 p = PersistenceManager()
-file = r'c:\temp\journal.txt'
+file = r'./temp.txt'
 p.save_to_file(j, file)
 
 # verify!
