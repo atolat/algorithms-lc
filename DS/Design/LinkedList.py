@@ -126,7 +126,7 @@ class SinglyLinkedList:
         return True
 
 
-def main():
+if __name__ == '__main__':
     ll = SinglyLinkedList()
     print(ll.is_empty())
     for i in range(1, 10):
@@ -141,7 +141,3 @@ def main():
     ll.remove(5)
     ll.print_list()
     ll.remove(99)
-
-
-if __name__ == '__main__':
-    main()
