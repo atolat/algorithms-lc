@@ -1,95 +1,142 @@
 class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next_element = None
-        self.previous_element = None
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+        self.prev = None
+    
+class MyLinkedList(object):
 
-
-class DoublyLinkedList:
     def __init__(self):
-        self.head_node = None
+        """
+        Initialize your data structure here.
+        """
+        self.head = Node('sentinel-head')
+        self.tail = Node('sentinel-tail')
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.size = 0
 
-    def get_head(self):
-        return self.head_node
-
-    def is_empty(self):
-        if(self.head_node is None):  # Check whether the head is None
-            return True
+    def get(self, index):
+        """
+        Get the value of the index-th node in the linked list. If the index is invalid, return -1.
+        :type index: int
+        :rtype: int
+        """
+        # if index is invalid
+        if index < 0 or index >= self.size:
+            return -1
+        
+        # choose the fastest way: to move from the head
+        # or to move from the tail
+        if index + 1 < self.size - index:
+            curr = self.head
+            for _ in range(index + 1):
+                curr = curr.next
         else:
-            return False
-
-    def insert_at_head(self, dt):
-        temp_node = Node(dt)
-        if(self.is_empty()):
-            self.head_node = temp_node
-            return self.head_node
-
-        temp_node.next_element = self.head_node
-        self.head_node.previous_element = temp_node
-        self.head_node = temp_node
-        return self.head_node
-
-    def delete(self, value):
-        deleted = False
-        if lst.is_empty():
-            print("List is Empty")
-            return deleted
-
-        current_node = lst.get_head()
-
-        if current_node.data is value:
-            # Point head to the next element of the first element
-            lst.head_node = current_node.next_element
-            # Point the next element of the first element to Nobe
-            current_node.next_element.previous_element = None
-            deleted = True  # Both links have been changed.
-            print(str(current_node.data) + " Deleted!")
-            return deleted
-
-        # Traversing/Searching for node to Delete
-        while current_node:
-            if value is current_node.data:
-                if current_node.next_element:
-                    # Link the next node and the previous node to each other
-                    prev_node = current_node.previous_element
-                    next_node = current_node.next_element
-                    prev_node.next_element = next_node
-                    next_node.previous_element = prev_node
-                    # previous node pointer was maintained in Singly Linked List
-
-                else:
-                    current_node.previous_element.next_element = None
-                deleted = True
-                break
-            # previousNode = tempNode was used in Singly Linked List
-            current_node = current_node.next_element
-
-        if deleted is False:
-            print(str(value) + " is not in the List!")
+            curr = self.tail
+            for _ in range(self.size - index):
+                curr = curr.prev
+                
+        return curr.val
+    
+    def get_pred_succ(self, index):
+        pred, succ = None, None
+        # find predecessor and successor of the node to be added
+        if index < self.size - index:
+            pred = self.head
+            for _ in range(index):
+                pred = pred.next
+            succ = pred.next
         else:
-            print(str(value) + " Deleted!")
-        return deleted
+            succ = self.tail
+            for _ in range(self.size - index):
+                succ = succ.prev
+            pred = succ.prev
+        return pred, succ
+        
+    def addAtHead(self, val):
+        """
+        Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+        :type val: int
+        :rtype: None
+        """
+        self.addAtIndex(0, val)
+        
 
-    def print_list(self):
-        if(self.is_empty()):
-            print("List is Empty")
-            return False
-        temp = self.head_node
-        while temp.next_element is not None:
-            print(temp.data, end=" -> ")
-            temp = temp.next_element
-        print(temp.data, "-> None")
-        return True
+    def addAtTail(self, val):
+        """
+        Append a node of value val to the last element of the linked list.
+        :type val: int
+        :rtype: None
+        """
+        self.addAtIndex(self.size, val)
+
+    def addAtIndex(self, index, val):
+        """
+        Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
+        :type index: int
+        :type val: int
+        :rtype: None
+        """
+        # Edge
+        if index > self.size:
+            return
+        if index < 0:
+            index = 0
+        
+        # find predecessor and successor of the node to be added
+        if index < self.size - index:
+            pred = self.head
+            for _ in range(index):
+                pred = pred.next
+            succ = pred.next
+        else:
+            succ = self.tail
+            for _ in range(self.size - index):
+                succ = succ.prev
+            pred = succ.prev
+    
+        new_node = Node(val)
+        new_node.prev = pred
+        new_node.next = succ
+        pred.next = new_node
+        succ.prev = new_node
+        
+        self.size += 1
+        
+        
+
+    def deleteAtIndex(self, index):
+        """
+        Delete the index-th node in the linked list, if the index is valid.
+        :type index: int
+        :rtype: None
+        """
+        # Edge
+        if index < 0 or index >= self.size:
+            return
+        
+        # find predecessor and successor of the node to be deleted
+        if index < self.size - index:
+            pred = self.head
+            for _ in range(index):
+                pred = pred.next
+            succ = pred.next.next
+        else:
+            succ = self.tail
+            for _ in range(self.size - index - 1):
+                succ = succ.prev
+            pred = succ.prev.prev
+        
+        pred.next = succ
+        succ.prev = pred
+        self.size -= 1
 
 
-lst = DoublyLinkedList()
-for i in range(11):
-    lst.insert_at_head(i)
-
-lst.print_list()
-lst.delete(5)
-
-lst.print_list()
-lst.delete(0)
-
-lst.print_list()
+# Your MyLinkedList object will be instantiated and called as such:
+# obj = MyLinkedList()
+# param_1 = obj.get(index)
+# obj.addAtHead(val)
+# obj.addAtTail(val)
+# obj.addAtIndex(index,val)
+# obj.deleteAtIndex(index)

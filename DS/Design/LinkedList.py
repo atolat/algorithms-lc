@@ -1,143 +1,131 @@
+# 707. Design Linked List
+# Medium
+
+# 656
+
+# 771
+
+# Add to List
+
+# Share
+# Design your implementation of the linked list. You can choose to use a singly or doubly linked list.
+# A node in a singly linked list should have two attributes: val and next. val is the value of the current node, and next is a pointer/reference to the next node.
+# If you want to use the doubly linked list, you will need one more attribute prev to indicate the previous node in the linked list. Assume all nodes in the linked list are 0-indexed.
+
+# Implement the MyLinkedList class:
+
+# MyLinkedList() Initializes the MyLinkedList object.
+# int get(int index) Get the value of the indexth node in the linked list. If the index is invalid, return -1.
+# void addAtHead(int val) Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+# void addAtTail(int val) Append a node of value val as the last element of the linked list.
+# void addAtIndex(int index, int val) Add a node of value val before the indexth node in the linked list. If index equals the length of the linked list, the node will be appended to the end of the linked list. If index is greater than the length, the node will not be inserted.
+# void deleteAtIndex(int index) Delete the indexth node in the linked list, if the index is valid.
+ 
+
+# Example 1:
+
+# Input
+# ["MyLinkedList", "addAtHead", "addAtTail", "addAtIndex", "get", "deleteAtIndex", "get"]
+# [[], [1], [3], [1, 2], [1], [1], [1]]
+# Output
+# [null, null, null, null, 2, null, 3]
+
+# Explanation
+# MyLinkedList myLinkedList = new MyLinkedList();
+# myLinkedList.addAtHead(1);
+# myLinkedList.addAtTail(3);
+# myLinkedList.addAtIndex(1, 2);    // linked list becomes 1->2->3
+# myLinkedList.get(1);              // return 2
+# myLinkedList.deleteAtIndex(1);    // now the linked list is 1->3
+# myLinkedList.get(1);              // return 3
+
 class Node:
-    def __init__(self, data=None):
-        self.data = data
+    def __init__(self, val = None):
+        self.val = val
         self.next = None
 
+class MyLinkedList(object):
 
-class SinglyLinkedList:
     def __init__(self):
         """
-        Create a new singly-linked list.
-        Takes O(1) time.
+        Initialize your data structure here.
         """
-        self.head = None
+        self.head = Node('sentinel')
+        self.size = 0    
 
-    def get_head(self):
+    def get(self, index):
         """
-        Returns head of Linked List
-        O(1)
+        Get the value of the index-th node in the linked list. If the index is invalid, return -1.
+        :type index: int
+        :rtype: int
         """
-        return self.head
-
-    def is_empty(self):
-        """
-        Check if list is empty
-        """
-        if self.head is None:
-            return True
-        return False
-
-    def insert_at_head(self, data):
-        """
-        Insert a node at head of LL
-        O(1)
-        """
-        temp = Node(data)
-        temp.next = self.head
-        self.head = temp
-        return self.head
-
-    def append(self, data):
-        """
-        Insert a new element at the end of the list.
-        Takes O(n) time.
-        """
-        new_node = Node(data)
-        if self.is_empty():
-            self.head = new_node
-            return self.head
-
-        temp = self.get_head()
-        while temp.next:
-            temp = temp.next
-        temp.next = new_node
-        return self.head
-
-    def find(self, key):
-        """
-        Search for the first element with `data` matching
-        `key`. Return the element or `None` if not found.
-        Takes O(n) time.
-        """
-        if self.is_empty():
-            print("List is Empty")
-            return None
-        temp = self.get_head()
-        while temp:
-            if temp.data == key:
-                print("Key found")
-                return temp
-            temp = temp.next
-        print("Key not found")
-        return None
-
-    def delete_at_head(self):
-        """
-        delete element from head of linked list
-        """
-        if self.is_empty():
-            print("List is Empty")
-            return
-        first_element = self.get_head()
-        if first_element is not None:
-            self.head = first_element.next
-            first_element.next = None
-        return
-
-    def remove(self, key):
-        """
-        Remove the first occurrence of `key` in the list.
-        Takes O(n) time.
-        """
-        deleted = False
-        if self.is_empty():
-            print("List is Empty")
-            return deleted
-        curr = self.get_head()
-        if curr.data == key:
-            self.delete_at_head()
-            deleted = True
-            return deleted
-        prev = None
-        while curr:
-            if curr.data == key:
-                prev.next = curr.next
-                curr.next = None
-                deleted = True
-                break
-            prev = curr
+        if index >= self.size or index < 0:
+            return -1
+        curr = self.head
+        for i in range(index+1):
             curr = curr.next
-        if not deleted:
-            print(str(key) + " not found")
-        else:
-            print(str(key) + " deleted")
-        return deleted
+        return curr.val
+    
+    def getPrev(self, index):
+        prev = self.head
+        for _ in range(index):
+            prev = prev.next
+        return prev 
+    
+    def addAtHead(self, val):
+        """
+        Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+        :type val: int
+        :rtype: None
+        """
+        self.addAtIndex(0, val)
 
-    # Supplementary print function
-    def print_list(self):
-        if(self.is_empty()):
-            print("List is Empty")
-            return False
-        temp = self.head
-        while temp.next is not None:
-            print(temp.data, end=" -> ")
-            temp = temp.next
-        print(temp.data, "-> None")
-        return True
+    def addAtTail(self, val):
+        """
+        Append a node of value val to the last element of the linked list.
+        :type val: int
+        :rtype: None
+        """
+        self.addAtIndex(self.size, val)
+        
+    def addAtIndex(self, index, val):
+        """
+        Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
+        :type index: int
+        :type val: int
+        :rtype: None
+        """
+        if index > self.size:
+            return
+        if index < 0:
+            index = 0
+            
+        prev = self.getPrev(index)
+        new_node = Node(val)
+        new_node.next = prev.next
+        prev.next = new_node
+        
+        self.size += 1
+
+    def deleteAtIndex(self, index):
+        """
+        Delete the index-th node in the linked list, if the index is valid.
+        :type index: int
+        :rtype: None
+        """
+        if index >= self.size or index < 0:
+            return
+        
+        prev = self.getPrev(index)
+        prev.next = prev.next.next
+
+        self.size -= 1
 
 
-if __name__ == '__main__':
-    ll = SinglyLinkedList()
-    print(ll.is_empty())
-    for i in range(1, 10):
-        ll.insert_at_head(i)
-    ll.print_list()
-    ll.append(100)
-    ll.print_list()
-    ll.find(100)
-    ll.delete_at_head()
-    ll.delete_at_head()
-    ll.print_list()
-    ll.remove(5)
-    ll.print_list()
-    ll.remove(99)
+# Your MyLinkedList object will be instantiated and called as such:
+# obj = MyLinkedList()
+# param_1 = obj.get(index)
+# obj.addAtHead(val)
+# obj.addAtTail(val)
+# obj.addAtIndex(index,val)
+# obj.deleteAtIndex(index)
