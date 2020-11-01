@@ -7,7 +7,6 @@
 
 # Note: Do not modify the linked list.
 
- 
 
 # Example 1:
 
@@ -30,8 +29,6 @@
 # Explanation: There is no cycle in the linked list.
 
 
- 
-
 # Follow-up:
 # Can you solve it without using extra space?
 
@@ -47,25 +44,27 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        if not head: return None
+        if not head:
+            return None
 
         slow = head
         fast = head
         cycle_length = 0
         current = None
-        
+
         # Use Floyd's Algorithm to detect a cycle
         while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
-            
+
             if fast == slow:
                 current = slow
                 # Cycle Exists, calculate length
-                break       
-        if current == None: return None # No Cycle
-        
-        # Now, to find the cycle length - 
+                break
+        if current == None:
+            return None  # No Cycle
+
+        # Now, to find the cycle length -
         # Anchor the node where fast and slow meet - This would be a node in the cycle
         # Advance the pointer one step at a time and increment cycle length
         # When the meet again, break
@@ -78,14 +77,13 @@ class Solution(object):
         # Find Start
         pointer1 = head
         pointer2 = head
-        
+
         # Move pointer2 by cycle_length
-        while cycle_length > 0:
+        for _ in range(cycle_length):
             pointer2 = pointer2.next
-            cycle_length -= 1
-            
+
         while pointer1 != pointer2:
             pointer1 = pointer1.next
             pointer2 = pointer2.next
-            
-        return pointer2              
+
+        return pointer2
