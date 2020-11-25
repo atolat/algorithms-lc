@@ -1,1 +1,39 @@
 [Tracker](https://docs.google.com/spreadsheets/d/1kfwqkKBKsxXx6uWNVsuavkLJKEvRrSl8ZcTCSYPERZE/edit?usp=sharing)
+
+- [Arrays/Strings](Strings-Arrays/)
+  - [Cyclic Sort](Strings-Arrays/Cyclic%20Sort/)
+  - [Pattern Matching](Strings-Arrays/Pattern%20Matching%20Algorithms/)
+  - [Primitive Types](Strings-Arrays/Primitive%20Types/)
+  - [Sliding Window](Strings-Arrays/Sliding%20Window/)
+  - [Two Pointer](Strings-Arrays/Two%20Pointer/)
+  - [Misc](Strings-Arrays/Misc/)
+- [Searching](Searching/)
+- [Sorting](Sorting/)
+  - [Algorithms](Sorting/Algorithms/)
+  - [Intervals](Sorting/Intervals/)
+- [Recursion](Recursion/)
+  - [Classic](Recursion/Classic)
+  - [Backtracking](Recursion/Backtracking)
+- [Trees](Trees/)
+  - [BFS](Trees/BFS/)
+  - [DFS](Trees/DFS/)
+    - [Bottom Up](Trees/DFS/Bottom-Up/)
+    - [Top Down](Trees/DFS/Top-Down/)
+    - [Boundary Walk](Trees/DFS/Boundary-Walk/)
+  - [Iterative](Trees/Iterative/)
+  - [Tree Construction](Trees/Tree%20Construction/)
+- [Linked Lists](Linked%20Lists/)
+- [Greedy](Greedy/)
+- [Heaps](Greedy/Heaps/)
+- [Graphs](Graphs/)
+  - Algorithms
+  - BFS
+  - DFS
+  - Topological Sort
+- [Dynamic Programming](DP/)
+  - Counting
+  - Optimization
+  - 0/1 Knapsack
+  - Unbound Knapsack
+  - Substrings
+- [Data Structures & Design](DS/Design/)
