@@ -1,8 +1,16 @@
-def binarystrings(slate, n):
-    if n == 0:
+def binarystrings(slate, i):
+    # Base Case
+    if i == n:
         print(slate)
-    else:
-        binarystrings(slate + "0", n-1)
-        binarystrings(slate + "1", n-1)
-
-binarystrings("", 5)
+        return
+    
+    slate.append(0)
+    binarystrings(slate, i + 1)
+    slate.pop()
+    
+    slate.append(1)
+    binarystrings(slate, i + 1)
+    slate.pop()
+    
+n = 5
+binarystrings([], 0)
