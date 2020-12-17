@@ -29,7 +29,6 @@
 # Output: 0
 # Explanation:  Since there are already no fresh oranges at minute 0, the answer is just 0.
 
-from Queue import Queue
 class Solution(object):
     def orangesRotting(self, grid):
         """
@@ -44,7 +43,7 @@ class Solution(object):
                     yield nr, nc
 
         # Initialize queue
-        q = Queue()
+        q = collections.deque()
         d = 0
         ROW = len(grid)
         COLUMN = len(grid[0])
@@ -53,20 +52,17 @@ class Solution(object):
         for r, row in enumerate(grid):
             for c, val in enumerate(row):
                 if val == 2:
-                    q.put((r,c,0))
+                    q.append((r,c,0))
                     
         # BFS
-        while q.empty() is False:
-            r,c,d = q.get()
+        while q:
+            r,c,d = q.popleft()
             for nr, nc in getNeighbors(r,c,ROW,COLUMN):
                 if grid[nr][nc] == 1:
                     grid[nr][nc] = 2
-                    q.put((nr,nc,d+1))
+                    q.append((nr,nc,d+1))
         
         if any(1 in row for row in grid):
             return -1
         
         return d
-    
-                      
-print(orangesRotting([[2,1,1],[1,1,0],[0,1,1]]))

@@ -23,7 +23,8 @@
 # Note:
 # You can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.
 
-from Queue import Queue
+# Time Complexity: O(V+E)
+# Space Complexity: O(N)
 class Solution(object):
     def countComponents(self, n, edges):
         """
@@ -33,33 +34,41 @@ class Solution(object):
         """
         # Build the Adjacency list
         adjList = [[] for _ in range(n)]
-        visited = [-1] * n
-        for [src,dst] in edges:
+        visited = set()
+        for src,dst in edges:
             adjList[src].append(dst)
             adjList[dst].append(src)
             
         def bfs(source):
             visited[source] = 1
-            q = Queue()
-            q.put(source)
+            q = collections.deque([source])
             
-            while q.empty() is False:
-                node = q.get()
+            while q:
+                # get the current node
+                node = q.popleft()
+                visited.add(node)
                 
+                # visit the neighbors
                 for neighbor in adjList[node]:
-                    if visited[neighbor] == -1:
-                        q.put(neighbor)
-                        visited[neighbor] = 1
+                    if neighbor not in visited:
+                        q.append(neighbor)
+                        visited.add(neighbor)
+        
         def dfs(source):
-            visited[source] = 1
+            visited.add(source)
             for neighbor in adjList[source]:
-                if visited[neighbor] == -1:
+                if neighbor not in visited:
                     dfs(neighbor)
-                        
+        
+        # Outer Loop
         components = 0
-        for v in range(n):
-            if visited[v] == -1:
+        
+        # nodes are numbered 0 to n-1
+        for i in range(n):
+            # if node is not visited, increment components and launch dfs/bfs with the node as source
+            if i not in visited:
                 components += 1
-                dfs(v)
+                dfs(i)
                 
         return components
+                    

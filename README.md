@@ -26,10 +26,9 @@
 - [Greedy](Greedy/)
 - [Heaps](Greedy/Heaps/)
 - [Graphs](Graphs/)
-  - Algorithms
-  - BFS
-  - DFS
-  - Topological Sort
+  - [Algorithms](Graphs/Algorithms/)
+  - [BFS-DFS](Graphs/BFS-DFS/)
+  - [Topological Sort](Graphs/Topological-Sort/)
 - [Dynamic Programming](DP/)
   - Counting
   - Optimization
