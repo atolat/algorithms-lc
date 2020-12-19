@@ -21,6 +21,7 @@
 #              To take course 1 you should have finished course 0, and to take course 0 you should
 #              also have finished course 1. So it is impossible.
 
+# Approach 1 - Using Arrival/Departure time
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
         """
@@ -61,4 +62,43 @@ class Solution(object):
             if visited[v] == -1:
                 if dfs(v):
                     return False
+        return True
+    
+# Approach 2
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        # Adj List and indegree map
+        adjList = {i:[] for i in range(numCourses)}
+        inDegree = {i:0 for i in range(numCourses)}
+        
+        # Build Graph
+        for src, dst in prerequisites:
+            adjList[src].append(dst)
+            inDegree[dst] += 1
+            
+        # Find sources
+        sources = collections.deque()
+        for node in inDegree:
+            if inDegree[node] == 0:
+                sources.append(node)
+            
+        sortedOrder = []
+        # BFS
+        while sources:
+            curr = sources.popleft()
+            sortedOrder.append(curr)
+            
+            for child in adjList[curr]:
+                inDegree[child] -= 1
+                if inDegree[child] == 0:
+                    sources.append(child)
+                    
+        if len(sortedOrder) != numCourses:
+            return False
+        
         return True
