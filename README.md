@@ -26,7 +26,7 @@
 - [Greedy](Greedy/)
 - [Heaps](Greedy/Heaps/)
 - [Graphs](Graphs/)
-  - [Algorithms](Graphs/Algorithms/)
+  - [Union Find](Graphs/UnionFind/)
   - [BFS-DFS](Graphs/BFS-DFS/)
   - [Topological Sort](Graphs/Topological-Sort/)
 - [Dynamic Programming](DP/)
