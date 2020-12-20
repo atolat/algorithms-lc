@@ -1,9 +1,4 @@
-#### Network
-#### OS
-#### DB
-- Hash Index: in-memory index/hashtable of key, val where val is an offset of the position of the key on disk to make disk lookups faster.
-- 
-#### Scaling
+### Scaling
 - **Reasons to scale**:
   - may need to scale DB and cache tier if size of the **data** is too huge.
   - if the number of requests per second is too huge, need to **scale for throughput**.
@@ -34,7 +29,7 @@
     - Cache : x ~ 2 ms -> 15000 requests per second
     - App : x ~ 1 ms -> 30000 requests per second
 
-###### How do we measure performace of a scalable system?
+**How do we measure performace of a scalable system?**
 - **SLI (Service Level Indicator)**: A quantitative measure of the level of service being provided.
   - *Correctness*: Is the right data being returned?  
     - Error as a fraction of all requests.
@@ -51,34 +46,80 @@
   - Scaling for data size, throughput, bulky service time, availability, geolocation and data hotspots also meant to satisfy SLOs.
 - **Service Level Agreement**: An explicit/implicit contract with your users on what the SLOs are, including consequences of missing/meeting the SLOs (rebate/penalty).
 
-###### Latency vs Response Time
+**Latency vs Response Time**
 - Latency: Duration that request is latent (awaiting service, not actually being served). Depends on 3 components:
   - Transmission Time = (Size of message/Bandwidth)
   - Propogation Delay = (Distance/Speed of light)
   - Queuing Delay
 - Response Time (for client): Latency (round trip time) + Service time (at server)
 
-###### Reverse and Forward Proxy
+**Reverse and Forward Proxy**
 - A proxy is an intermediary between client and server. It defers all the work to the servers behind it.
 - Reverse Proxy (server-side proxy) - it acts on behalf of the server. 
   - load balancer
   - decryption and encryption within the private n/w
-- Forward Proxy (client-side proxy) - forwards client's request into the public internet from the client.       Multiple clients share a forward proxy (super client). 
+- Forward Proxy (client-side proxy) - forwards client's request into the public internet from the client. Multiple clients share a forward proxy (super client). 
   - web cache
   - content filtering - clients unauthorized to access certain web content.
 
-###### Load Balancing
 **Why use LB?**
-- Increase throughput - handles 10x - 100x (100k - 1M qps) requests compared to app servers.
-- Policies:
-  - Round Robin
-  - Least number of active connections
-  - Least response time
-  - Weighted RR
-  - Random RR
-  - Hashing
-- Increase availability
-  - Heartbeat/Healthcheck for app servers
-  - Take servers down servers one by one for upgrades
-- Passive Backup LB (different machines - same IP) to prevent single point of failure.
-- Multiple Active LBs with different IPs - DNS service returns different IP addresses to client (DNS-based LB).
+- **Increase throughput** - handles 10x - 100x (100k - 1M qps) requests compared to app servers.
+  - Policies:
+    - Round Robin
+    - Least number of active connections
+    - Least response time
+    - Weighted RR
+    - Random RR
+    - Hashing
+- **Increase availability, reduce response time**
+    - Heartbeat/Healthcheck for app servers
+    - Take servers down servers one by one for upgrades
+  - Local
+    - Passive Backup LB (different machines - same IP) to prevent single point of failure.
+  - Global
+    - DNS-based LB: Multiple Active LBs with different IPs - DNS service returns different IP addresses to client.
+    - IP Anycast: Multiple active LBs with same IP in different datacenters. Client request is directed to nearest router with the same Anycast IP addr (closest router - Dijkstra's algorithm).
+ 
+### Replication
+- **Single Leader Data Replication**
+  - All writes go to a single replica - leader/primary/master
+  - Other replicas are followers
+  - Leader records all the write changes in a change log
+  - Each follower follows change log to synchronize data
+  - Read requests can be served by any replica 
+  - If the leader fails, a new node is elected as leader.
+  - ISSUE: Reads may sometimes see stale data until replication is completed.(INCONSISTENCY)
+  - Eventually, the followers catch up with the leader (EVENTUAL CONSISTENCY - replication lag)
+  - Strong Consistency - When clients can't tell the system is replicated.
+- **Multileader Data Replication**
+  - One leader in each datacenter. 
+  - Use timestamps to achieve eventual consistency with respect to conflicting writes.
+- **Leaderless Replication**
+  - instead of a leader being the source of truth, a simple majority of replicas can be the source of truth.
+  - when writing, send the write request to all replicas
+  - once a majority of them ack the write, consider it successful
+  - when reading, ask for everyone's opinion and take the majority view
+  - what if one of the replicas fail?
+    - add a timestamp to writes to discern the truth
+  - N = number of replicas
+  - W = number of replicas that need to ack the write request (write quorum)
+  - R = number of replicas that need to ack the read request (read quorum)
+  - As long as as R + W > N, we can figure out the true value.
+  - For N = 3
+    - W = 2, R = 2 -> Most fault tolerant. If one of the nodes fails, we can still get a successful read/write operation.
+    - W = 3, R = 1 -> Writes take more time
+    - W = 1, R = 3 -> Reads take more time
+- **CAP Theorem**
+  - When a distributed system is (network) partitioned, it can either be consistent (CP) or available (AP).
+  - Consistent+Available(CA) is not a distributed system.
+- **Content Distribution Networks**
+  - Strategy to optimize reads
+  - The client reads from a proxy cache (server-side) - APP + CACHE which stores popular content.
+  - The DB can be in a different datacenter
+  - A CDN is a geographically distributed collection of proxy cache servers.
+- **Cache Reads and Writes**
+    - Cache Aside: Cache and DB are disconnected. App layer maintains data synchronization bertween cache and DB.
+    - Read Through Cache: Cacche is responsible for updating itself with DB. App reads only from cache. If there is a cache miss, cache fetches value from DB and updates itself. A write happens in the cache and percolated to the DB through the cache (Write-through). Write operations are slow.
+    - Write Back/Write Behind: Writes happen only in cache. Data is written to DB from cache periodically or when the entry is evicted from cache. Writes are faster here but if the system crashes, there is a chance of stale data in DB.
+
+### Sharding 
