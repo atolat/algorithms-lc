@@ -27,6 +27,7 @@
 - [Heaps](Greedy/Heaps/)
 - [Graphs](Graphs/)
   - [Union Find](Graphs/UnionFind/)
+  - [Minimum Spanning Tree](Graphs/Minimum%20Spanning%20Tree/)
   - [BFS-DFS](Graphs/BFS-DFS/)
   - [Topological Sort](Graphs/Topological-Sort/)
 - [Dynamic Programming](DP/)
