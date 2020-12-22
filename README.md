@@ -7,6 +7,7 @@
   - [Sliding Window](Strings-Arrays/Sliding%20Window/)
   - [Two Pointer](Strings-Arrays/Two%20Pointer/)
   - [Misc](Strings-Arrays/Misc/)
+- [Stacks & Queues](Stacks-Queues/)
 - [Searching](Searching/)
 - [Sorting](Sorting/)
   - [Algorithms](Sorting/Algorithms/)
