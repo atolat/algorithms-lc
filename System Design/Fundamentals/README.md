@@ -123,3 +123,17 @@
     - Write Back/Write Behind: Writes happen only in cache. Data is written to DB from cache periodically or when the entry is evicted from cache. Writes are faster here but if the system crashes, there is a chance of stale data in DB.
 
 ### Sharding 
+- Large amount of data that can't fit on a single machine or qps is so high that a single machine cannot handle it.
+- Breaking up the data so it can fit on multiple machines is called sharding.
+- Each k-v pair belongs to one partition or shard, each shard is replicated for high availability.
+- Data must be distributed uniformly across all shards.
+- When a partition or shard receives a disproportionate amount of traffic - HOTSPOT
+- The mapping must be random and uniformly distributed across shards to prevent data hotspotting.
+- Using hashing:
+  - k-v pairs -> across 0 to s-1 shards
+  - MD5(key) -> 128-bit string -> %s -> shard id
+  - Requests to a key are routed by a partition aware LB/router
+  - Adding/deleting shards would require re-hashing - expensive operation
+
+- **Consistent Hashing**
+  - 
