@@ -135,3 +135,29 @@
 - ZREMRANGEBYRANK myzset 0 1 (Removes all elements in the sorted set stored at key with rank between start and stop.)
 - ZREMRANGEBYSCORE myzset -inf (2  (Removes all elements in the sorted set stored at key with a score between min and max (inclusive).)
 - ZREVRANGEBYSCORE myzset 2 (1  (Apart from the reversed ordering, ZREVRANGEBYSCORE is similar to ZRANGEBYSCORE.)
+
+- **Transactions**
+  - A transaction is a block of commands.
+  - MULTI, EXEC, DISCARD and WATCH
+  - All commands are selialized and executed sequentially
+  - It can never happen that a request issued by another client is served in the middle of execution of a redis transaction. This guarantees that commands are executed as a single isolated operation.
+  - Either all or none of the concepts are processed - ATOMIC.
+  - If a client passes invalid command to the server in the context of a transaction, none of the operations are processed.
+  - Start a tx using MULTI
+    - Commands following multi are queued
+  - EXEC to execute queued commands
+  - Errors in a transaction:
+    - command may fail to be queued, error before exec - syntax errors, wrong no of arguments, wrong command name, etc.
+    - command may fail after EXEC is called - perform operation against a key with wrong value
+      - In this case, commands in the tx that succeed are performed.
+      - Redis doesn't support ROLLBACK.
+  - Use DISCARD to abort a tx.
+  - WATCH - monitor changes to keys - check and set behavior. If the value of a watched key is changed outside a tx, any change to the key is blocked within a tx.
+  - A key can be unwatched using the UNWATCH command in a tx. A key that is watched by one client, cannot be unwatched by another client.
+
+- **Publish/Subscribe**
+  - Allows for setting up message buses. This allows redis to act as a broker for multiple clients providing a simple way to post and consume messages and events.
+  - Senders (publishers) are not programmed to send messages to specific receivers (subscribers).
+  - Rather, published messages are characterized into channels, without knowledge of what subscribers there msy be.
+  - Subscribers express interest in one or more channels and only receive messages that are of interest, without knowledge of waht publishers there are.
+  - Redis doesn't guarantee message delivery.
