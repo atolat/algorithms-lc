@@ -136,4 +136,13 @@
   - Adding/deleting shards would require re-hashing - expensive operation
 
 - **Consistent Hashing**
-  - 
+  - 'k' key-value pairs i1, i2, i3...ik
+  - 'N' shard servers that store k-v pairs - dynamic
+  - 'b' partitions - fixed
+  - Assign each k-v pair to a partition MD5(i) % b
+  - Each server is assigned to a partition - N % b 
+  - The key is to have a constant hash space -  somewhere in the order of [0, 2^128 - 1] and the storage node and objects(k-v pairs) both map to one of the slots in this huge Hash Space.
+  - Instead of using a collision-based approach we define the association as — the object will be associated with the storage node which is present to the immediate right of its hashed location. Defining association in this way helps us:
+    - keep the hash function independent of the number of storage nodes
+    - keep associations relative and not driven by absolute collisions
+  - Consistent Hashing on an average requires only k/n units of data to be migrated during scale up and down; where k is the total number of keys and n is the number of nodes in the system.

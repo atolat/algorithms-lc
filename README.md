@@ -33,11 +33,11 @@
   - [BFS-DFS](Graphs/BFS-DFS/)
   - [Topological Sort](Graphs/Topological-Sort/)
 - [Dynamic Programming](DP/)
-  - Counting
-  - Optimization
-  - 0/1 Knapsack
-  - Unbound Knapsack
-  - Substrings
+  - [Counting](DP/Counting/)
+  - [Optimization](DP/Optimization/)
+  - [0/1 Knapsack](DP/0-1-Knapsack/)
+  - [Unbound Knapsack](DP/Unbounded%20Knapsack/)
+  - [Strings](DP/Strings/)
 - [Data Structures & Design](DS/Design/)
 - [System Design](System%20Design/)
 - [Multithreading](Multithreading/)

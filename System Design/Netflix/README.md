@@ -71,4 +71,5 @@
 - https://www.linkedin.com/pulse/system-design-netflix-narendra-l/?published=t
 - https://www.infoq.com/presentations/Netflix-Architecture/
 - https://chukwa.apache.org/
+- https://netflixtechblog.com/announcing-zuul-edge-service-in-the-cloud-ab3af5be08ee
   

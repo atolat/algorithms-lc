@@ -160,3 +160,9 @@
   - Rather, published messages are characterized into channels, without knowledge of what subscribers there msy be.
   - Subscribers express interest in one or more channels and only receive messages that are of interest, without knowledge of waht publishers there are.
   - Redis doesn't guarantee message delivery.
+
+
+#### Reading
+- https://stackoverflow.com/questions/10558465/memcached-vs-redis
+- https://redis.io/topics/lru-cache
+- 

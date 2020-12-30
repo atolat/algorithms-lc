@@ -14,13 +14,30 @@
 # Output: 6
 # Explanation: Cheapest is start on cost[0], and only step on 1s, skipping cost[3].
 
+# Decrease and Conquer: At any arbitrary step i, you could reach i from either the (i-1)th step or (i-2)th step. The objectiove function to find the min cost f(i) -> f(i) = cost(i) + min(f(i-1), f(i-2))
+# RECURSIVE SOLUTION #
 class Solution(object):
     def minCostClimbingStairs(self, cost):
         """
         :type cost: List[int]
         :rtype: int
         """
-        # DP
+        def f(i):
+            if i == 0 or i == 1:
+                return cost[i]
+            min_cost = cost[i] + min(f(i-1), f(i-2))
+            return min_cost
+        n = len(cost) - 1
+        
+        return min(f(n), f(n-1))
+    
+# BOTTOM UP DP #
+class Solution(object):
+    def minCostClimbingStairs(self, cost):
+        """
+        :type cost: List[int]
+        :rtype: int
+        """
         n = len(cost)
         dp = [0 for _ in range(n)]
         dp[0] = cost[0]

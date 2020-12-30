@@ -14,10 +14,7 @@
 # Explanation: The minimum number of jumps to reach the last index is 2.
 #     Jump 1 step from index 0 to 1, then 3 steps to the last index.
 
-# Recursive Solution - Brute Force
-import math
-
-
+# Recursive Solution - Brute Force - TLE
 class Solution(object):
     def jump(self, nums):
         """
@@ -45,9 +42,7 @@ class Solution(object):
 
         return helper(nums, 0)
 
-# Top Down - Recursion + Memo
-
-
+# Top Down - Recursion + Memo - TLE
 class Solution(object):
     def jump(self, nums):
         """
@@ -79,3 +74,45 @@ class Solution(object):
 
         dp = [0 for x in range(len(nums))]
         return helper(nums, 0)
+
+# Bottom Up DP - TLE
+class Solution(object):
+    def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)
+        dp = [float('+inf') for _ in range(n)]
+        dp[0] = 0
+
+        for start in range(n-1):
+            end = start + 1
+            while end <= start + nums[start] and end < len(nums):
+                dp[end] = min(dp[end], dp[start]+1)
+                end += 1
+        return dp[n-1]
+
+# GREEDY - OPTIMAL SOLUTION
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+class Solution(object):
+    def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 1:
+            return 0
+        furthest, i, last_jmp_indx, jumps = 0, 0, 0, 0
+        while i < len(nums):
+            furthest = max(furthest, i + nums[i])
+            if last_jmp_indx == i:
+                last_jmp_indx = furthest
+                jumps += 1
+
+                if furthest >= len(nums)-1:
+                    return jumps
+            i += 1
+
+        return jumps
