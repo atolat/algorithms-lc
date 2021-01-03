@@ -23,6 +23,7 @@ def helper(wt, val, i, j):
 # Time Complexity: O(m*n) - m is capacity, n is len(wt)
 # Space Complexity: O(m*n) - m is capacity, n is len(wt)
 def knapsack_dp(wt, val, cap):
+    n = len(wt)
     if not wt or not val:
         return 0
     dp = [[0 for _ in range(cap+1)] for _ in range(len(wt)+1)]
@@ -35,11 +36,11 @@ def knapsack_dp(wt, val, cap):
                 steal = val[i-1] + dp[i-1][j-wt[i-1]]
             dont_steal = dp[i-1][j]
             dp[i][j] = max(steal, dont_steal)
-    return dp[-1][-1]
+    return dp[n-1][cap]
 
 
-wt = [1, 2, 4]
-val = [60, 100, 120]
-cap = 5
+wt = [1, 2, 4,6]
+val = [60, 100, 120,150]
+cap = 25
 print(knapsack_rec(wt, val, cap))
 print(knapsack_dp(wt, val, cap))
