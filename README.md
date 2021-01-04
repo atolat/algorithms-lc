@@ -37,7 +37,7 @@
   - [Optimization](DP/Optimization/)
   - [0/1 Knapsack](DP/0-1-Knapsack/)
   - [Unbound Knapsack](DP/Unbounded%20Knapsack/)
-  - [Strings](DP/Strings/)
+  - [Substrings and Subsequences](DP/Substrings%20and%20Subsequences/)
 - [Data Structures & Design](DS/Design/)
 - [System Design](System%20Design/)
 - [Multithreading](Multithreading/)
