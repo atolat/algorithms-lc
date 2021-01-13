@@ -41,6 +41,9 @@
 #    "Emma":  []
 # }
 
+# TIME COMPLEXITY: O(User * (Song * Genres))
+# SPACE COMPLEXITY: O(n * m + m * s), where n is the number of users, and m is the amount of genres, and s is the number of songs.
+
 from collections import defaultdict
 def favoriteGenres(userSongs, songGenres):
     results = defaultdict(int)
