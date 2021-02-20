@@ -45,7 +45,7 @@
 ###### Scaling for Capacity
 - **Capacity Estimates**:
   - 2-3 billion short links every year - 73 queries per second
-  - 20 bilion clicks per month - 7700 queries per second
+  - 20 billion clicks per month - 7700 queries per second
   - Reads:Writes ~ 100:1
   - Plan for ~3 yrs or 1000 days
     - Number of seconds per day ~ 100,000
