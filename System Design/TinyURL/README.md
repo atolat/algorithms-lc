@@ -12,26 +12,48 @@
 - Shortened links should not be guessable (not predictable).
 
 #### Notes
+
+- Use a key value store like a hash table to store shortURL as key and longURL as value. Insert/Search/Delete O(1)
+- We have to encode the longURL and generate a unique key that also serves as the back half of the shortURL.
+
+#### APIs
+- encode(longURL) : shortURL
+- decode(shortURL) : longURL
+
 ##### Algorithms
 - **Simple counter**
-  - No collisions
-  - Too short
-  - Predictable
+  - Use a simple counter to generate a key. 
+  - Everytime a longURL comes in, increment a global counter and make an entry in the hashtable.
+  - Use the string version of the  counter as the back half for the shortURL.
+  - Pros:
+    - No collisions
+  - Cons:
+    - If we are not using any additional encoding, i.e., only digits 0-9 (base 10), the length of the short URL might grow too long (10 digits for billionth URL) - this scheme might not work well if we need a fixed size shortner.  
+    - Predictable
 
 - **Base62/64 Encoding**
-  - No collisions
-  - Predictable
+  - Continuing from the previous scheme, use a higher base to encode the counter value.
+  - We can shrink larger numbers to lesser characters using higher base for encoding.
+  - If we work with base 64 (a-z, A-Z, 0-9, -, _) and use let's say length 7 for back half, we can generate 64^7 unique strings ~ 4 trillion.  
+  - Pros:
+    - Fixed length
+    - No collisions
+  - Cons: 
+    - Predictable
 
 - **Random Counter**
-  - Unpredictable
-  - Chance of collisions
-  - Reduce collisions by increasing length
+  - Continuing from the previous scheme, in order to make the URLs unpredictable, use a random number generator instead of a counter.
+  - Pros:
+    - Unpredictable
+  - Cons:
+    - Chance of collisions
+    - Reduce collisions by increasing length
 
 - **Cryptographic Hashing**
   - MD5 (128 bit), SHA-1 (160 bit), SHA-2, SHA-3, SH256...
   - LongURL -> CRYPT-HASH -> 128-bits digest -> base64 (encode groups of 6 bits) -> 22 chars -> Pick 6 chars as ShortURL
   - Higher probability of collision since we pick only a subset of the 128 bit digest
-  - Hash functions are deterministic - same longURL mapss to the same shortURL, short URL is not unique
+  - Hash functions are deterministic - same longURL maps to the same shortURL, short URL is not unique
     - This can be fixed- take a hash of longURL + counter/timestamp
 
 - **Offline Key Generation**
