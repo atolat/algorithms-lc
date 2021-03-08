@@ -13,32 +13,44 @@
 # ]
 # Output: 1->1->2->3->4->4->5->6
 
+# Time Complexity: O(n log k)
+# Space Complexity: O(k)
+# Approach: Add the heads of all lists to a minheap. Pop out the min element and add the next element from the corresponding list to the heap. 
+
+from heapq import *
 # Definition for singly-linked list.
 # class ListNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
-import heapq
+
 class Solution(object):
     def mergeKLists(self, lists):
         """
         :type lists: List[ListNode]
         :rtype: ListNode
         """
-        minHeap = []
+        # Initialize a minheap
+        minheap = []
         
-        for head in lists:
-            while head is not None:
-                heapq.heappush(minHeap, head.val)
-                head = head.next                
+        # Push the heads of all lists in the heap
+        for root in lists:
+            if root:
+                heappush(minheap, (root.val, root))
         
-        sentinel = ListNode(-1)
-        head = sentinel
+        # Create a sentinel head
+        head = ListNode(-1,-1)
         
-        while minHeap:
-            val = heapq.heappop(minHeap)
-            node = ListNode(val)
-            head.next = node
-            head = head.next
-            
-        return sentinel.next
+        # Pop out smallest element, push the next smallest from that list in the heap 
+        curr = head
+        while minheap:
+            val, node = heappop(minheap)
+            curr.next = node
+            curr = node
+            # Push the next smallest element 
+            if node.next:
+                heappush(minheap, (node.next.val, node.next))
+                
+        if head.next != -1:
+            return head.next
+        return None
