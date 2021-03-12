@@ -41,3 +41,19 @@
     - Next, load all the pairs for a term from disk to RAM, construct the postings list and write it back to disk.
     - The key challenge here is to figure out how to sort the pairs on disk - this would require an *external sort* on disk. 
     - https://www.geeksforgeeks.org/external-sorting/
+
+- **How to store an inverted index?**
+  - Dictionary in RAM, where keys are the terms and values represent a segment offset on disk for the postings list of the term.
+  - Since the terms are lexicographically sorted, we need not store all the terms in dictionary. 
+    - EG: brutal, brute, brutus - we can store only brute in RAM. When we get a query for brute, find the ancestor - brutal, retrieve a block from disk and look up the successor terms till brute is found. 
+    - We can use this to answer range queries too - eg words starting with brut*
+    - This representation where the postings lists appear in sorted order of terms is called a *SSTable - Sorted String Table*
+    - https://www.igvita.com/2012/02/06/sstable-and-log-structured-storage-leveldb/
+    - ![SSTable](https://www.igvita.com/posts/12/xsstable.png.pagespeed.ic.IkMoqaKZX9.webp)
+
+- **Distributed File System & Map Reduce**
+  - A large scale search system can contain billions of documents that cannot fit on a single machine.
+  - Google serves ~ 70,000 requests per second.
+  - We need to scale the batch processing pipeline for index construction (*INDEXER*) as well as the online search microservice (*RETRIEVER*)
+  - The documents to be index as well as the index need to be sharded across a large froup of machines.
+  -  
