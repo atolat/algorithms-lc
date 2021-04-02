@@ -51,7 +51,7 @@
     - https://www.igvita.com/2012/02/06/sstable-and-log-structured-storage-leveldb/
     - ![SSTable](https://www.igvita.com/posts/12/xsstable.png.pagespeed.ic.IkMoqaKZX9.webp)
 
-- **Distributed File System**
+- **Distributed File System & Map Reduce**
   - A large scale search system can contain billions of documents that cannot fit on a single machine.
   - Google serves ~ 70,000 requests per second.
   - We need to scale the batch processing pipeline for index construction (*INDEXER*) as well as the online search microservice (*RETRIEVER*)
