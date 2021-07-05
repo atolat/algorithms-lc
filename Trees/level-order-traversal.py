@@ -24,26 +24,27 @@
 #         self.left = None
 #         self.right = None
 from Queue import Queue
+
+
 class Solution(object):
     def levelOrder(self, root):
-
         """
         :type root: TreeNode
         :rtype: List[List[int]]
         """
         # Initialize empty results list
         results = []
-        
+
         # Null Check
         if root is None:
             return results
-        
+
         # Initialize empty Queue
         q = Queue()
-        
+
         # Push root node in queue
         q.put(root)
-        
+
         while q.empty() is not True:
             # Count the number of nodes at each level --> length of the queue
             numnodes = q.qsize()
@@ -52,11 +53,37 @@ class Solution(object):
             for _ in range(numnodes):
                 node = q.get()
                 temp.append(node.val)
-                
+
                 if node.left is not None:
                     q.put(node.left)
-                    
+
                 if node.right is not None:
                     q.put(node.right)
             results.append(temp)
         return results
+
+# DFS approach
+
+
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        result = []
+        # DFS
+
+        def dfs(node, level):
+            # Level is the index of the array in result
+            if level > len(result):
+                result.append([])
+            result[level-1].append(node.val)
+            if node.left:
+                dfs(node.left, level + 1)
+            if node.right:
+                dfs(node.right, level + 1)
+        if not root:
+            return []
+        dfs(root, 1)
+        return result
